@@ -28,7 +28,10 @@ echo "::1          localhost" >> /etc/hosts
 echo "127.0.1.1    $HOSTNAME.localdomain    $HOSTNAME" >> /etc/hosts
 
 # root password
-passwd
+until passwd
+do
+    echo "Try again"
+done
 
 # last installs
 pacman -Syu --noconfirm

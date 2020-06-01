@@ -101,7 +101,7 @@ sudo systemctl enable bluetooth
 ##################
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 echo ".dotfiles" >> .gitignore
-git clone --bare https://github.com/vandalt/gnome-dotfiles.git $HOME/.dotfiles
+git clone --bare git@github.com:vandalt/gnome-dotfiles.git $HOME/.dotfiles
 mkdir -p .config-backup && \
 config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
 xargs -I{} rm -rf {}
