@@ -35,7 +35,7 @@ curl -s "https://www.archlinux.org/mirrorlist/?country=CA&country=US&protocol=ht
 pacstrap /mnt base linux linux-firmware
 
 # generate fstab
-genfstab -u /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
 # chroot to new install
 arch-chroot /mnt
