@@ -33,6 +33,7 @@ PKGS_PAC=(
 
     # UTILS
     'htop'
+    'screen'
     'cups'
     'cups-pdf'
     'openssh'
