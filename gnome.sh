@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+shopt -s expand_aliases
+
 PKGS_PAC=(
     'gdm'
     'gnome'
@@ -41,6 +43,7 @@ PKGS_RM=(
     'gnome-weather'
     'totem'
     'gnome-software'
+    'gnome-terminal'
 )
 
 # sudo password only once in 1 h
@@ -162,17 +165,12 @@ cd ../..
 rm -rf nord-gnome-terminal
 proflist=$(gsettings get org.gnome.Terminal.ProfilesList list | tr -d \[ | tr -d \] | tr -d \' | tr -d , | tr -d \s)
 for prof in $proflist; do
-    name=$(gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$prof/ visible-name)
+    name=$(gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$prof/ visible-name | tr -d \')
     if [ $name == Nord ]; then
         gsettings set org.gnome.Terminal.ProfilesList default $prof
         termprof=$prof
     fi
 done
-
-######################
-#### FILE MANAGER ####
-######################
-gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 
 # customize
 gsettings set org.gnome.Terminal.Legacy.Settings headerbar false
@@ -182,20 +180,26 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ audible-bell false
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ scrollbar-policy 'never'
 
+######################
+#### FILE MANAGER ####
+######################
+gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+
 #####################################
 #### WORKSPACES AND APPLICATIONS ####
 #####################################
 
-# dynamic workspace
+# dynamic workspaces
+gsettings set org.gnome.shell.overrides dynamic-workspaces false
 gsettings set org.gnome.mutter dynamic-workspaces false
 gsettings set org.gnome.desktop.wm.preferences num-workspaces 6
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
 
 # assign applications to workspace
-gsettings set org.gnome.shell.extensions.auto-move-windows application-list
+gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['brave-browser.desktop:2', 'thunderbird.desktop:5', 'joplin.desktop:3', 'spotify.desktop:6', 'slack.desktop:5', 'cpod.desktop:6']"
 
 # favorite applications
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'brave-browser.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Terminal.desktop', 'spotify.desktop', 'slack.desktop', 'zoom.desktop', 'libreoffice-impress.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'brave-browser.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Nautilus.desktop', 'vim.desktop', 'zotero.desktop', 'spotify.desktop', 'libreoffice-impress.desktop','slack.desktop', 'Zoom.desktop', 'texmaker.desktop']"
 
 ##################
 #### SETTINGS ####
@@ -218,12 +222,14 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 40
 # mouse and touchpad
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scroll-enabled true
+gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
 gsettings set org.gnome.desktop.peripherals.mouse natural-scroll false
 
 # keyboard (french ca)
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'ca')]"
 
+# window top bar tweaks
+gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:appmenu'
 
 ############################
 #### KEYBOARD SHORTCUTS ####
@@ -256,10 +262,13 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys logout "['<Shift><Sup
 gsettings set org.gnome.desktop.wm.keybindings panel-run-dialog "['<Super>r']"
 gsettings set org.gnome.shell.keybindings toggle-application-view "['<Super>a']"
 
-# windows
+# windows general
 gsettings set org.gnome.desktop.wm.keybindings close "['<Shift><Super>q']"
 gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>d']"
 gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Shift><Super>f']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-center-only-toggles 1
+
+# putwindow snapping
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-w "['<Shift><Super>h']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-n "['<Shift><Super>k']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-e "['<Shift><Super>l']"
@@ -272,6 +281,12 @@ gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-right-screen
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-left-screen "['<Super>colon']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Shift><Super>Return']"
 
+# putwindow focus
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-west "['<Super>h']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-north "['<Super>k']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-east "['<Super>l']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-south "['<Super>j']"
+
 ## APPLICATIONS ##
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/']"
 
@@ -282,7 +297,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 
 # browser
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Browser'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'brave-bin'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'brave'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>i'
 
 # email
