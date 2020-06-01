@@ -28,7 +28,6 @@ echo "::1          localhost" >> /etc/hosts
 echo "127.0.1.1    $HOSTNAME.localdomain    $HOSTNAME" >> /etc/hosts
 
 # root password
-echo "Will now run passwd to set root password..."
 passwd
 
 # last installs
