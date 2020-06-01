@@ -1,0 +1,321 @@
+#!/usr/bin/bash
+
+PKGS_PAC=(
+    'gdm'
+    'gnome'
+    'gnome-tweaks'
+    'dconf-editor'
+    'bluez'
+    
+    # THEMES
+    'arc-gtk-theme'
+    'papirus-icon-theme'
+)
+
+PKGS_AUR=(
+    'gnome-terminal-transparency'
+
+    # EXTENSIONS
+    'gnome-shell-extension-put-window-git'
+    'gnome-shell-extension-dash-to-dock'
+    'gnome-shell-extension-tray-icons'
+    'gnome-shell-extension-hidetopbar-git'
+
+    # THEMES
+    'nordic-theme-git'
+    'paper-icon-theme'
+)
+
+PKGS_RM=(
+    'epiphany'
+    'evince'
+    'file-roller'
+    'gnome-calculator'
+    'gnome-contacts'
+    'gnome-maps'
+    'gnome-documents'
+    'gnome-music'
+    'gnome-photos'
+    'gnome-remote-desktop'
+    'gnome-system-monitor'
+    'gnome-weather'
+    'totem'
+    'gnome-software'
+)
+
+# sudo password only once in 1 h
+bypass() {
+  sudo -v
+  while true;
+  do
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
+  done 2>/dev/null &
+}
+
+bypass
+
+##################
+#### SOFTWARE ####
+##################
+
+# install with pacman
+for PKG in "${PKGS_PAC[@]}"; do
+    echo "INSTALLING: ${PKG}"
+    sudo pacman -S "$PKG" --noconfirm --needed
+done
+for PKG in "${PKGS_RM[@]}"; do
+    echo "REMOVING: ${PKG}"
+    sudo pacman -Rs "$PKG" --noconfirm
+done
+
+# setup AUR
+mkdir AUR
+cd AUR
+git clone https://aur.archlinux.org/auracle-git.git
+cd auracle-git
+makepkg -si --noconfirm
+cd ..
+
+for PKG in "${PKGS_AUR[@]}"; do
+    echo "INSTALLING: ${PKG}"
+    auracle clone "$PKG"
+    cd "$PKG"
+    makepkg -si --noconfirm
+    cd ..
+    if [ "$PKG" == "gnome-shell-extension-put-window-git" ]; then
+        sed -i '/convenience.js/d' "$PKG"/PKGBUILD
+    fi
+done
+
+# enable required packages
+sudo systemctl enable gdm
+sudo systemctl enable bluetooth
+
+##################
+#### DOTFILES ####
+##################
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+echo ".dotfiles" >> .gitignore
+git clone --bare git@github.com:vandalt/gnome-dotfiles.git $HOME/.dotfiles
+mkdir -p .config-backup && \
+config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
+xargs -I{} rm -rf {}
+config checkout
+config config --local status.show.UntrackedFiles no
+
+####################
+#### EXTENSIONS ####
+####################
+
+# enable
+gnome-extensions enable hidetopbar@mathieu.bidon.ca
+gnome-extensions enable putWindow@clemens.lab21.org
+gnome-extensions enable tray-icons@zhangkaizhao.com
+gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+gnome-extensions enable dash-to-dock@micxgx.gmail.com
+
+# hide top bar
+gsettings set org.gnome.shell.extensions.hidetopbar enable-intellihide true
+gsettings set org.gnome.shell.extensions.hidetopbar enable-active-window true
+gsettings set org.gnome.shell.extensions.hidetopbar shortcut-toggles true
+gsettings set org.gnome.shell.extensions.hidetopbar shortcut-keybind "['<Shift><Super>i']"
+gsettings set org.gnome.shell.extensions.hidetopbar pressure-timeout 100
+gsettings set org.gnome.shell.extensions.hidetopbar pressure-threshold 200
+gsettings set org.gnome.shell.extensions.hidetopbar shortcut-delay 1.0
+
+# dash-to-dock
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+gsettings set org.gnome.shell.extensions.dash-to-dock intellihide true
+gsettings set org.gnome.shell.extensions.dash-to-dock intellihide-mode 'ALL_WINDOWS'
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen false
+gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 56
+gsettings set org.gnome.shell.extensions.dash-to-dock show-favorites true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-running true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
+gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys false
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink false
+gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
+gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.20
+gsettings set org.gnome.shell.extensions.dash-to-dock force-straight-corner false
+
+###############
+#### THEME ####
+###############
+gsettings set org.gnome.shell.extensions.user-theme name 'Nordic'
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Nordic'
+gsettings set org.gnome.desktop.interface cursor-theme 'Paper'
+
+##################
+#### TERMINAL ####
+##################
+
+# get nord and set as default
+git clone https://github.com/arcticicestudio/nord-gnome-terminal.git
+cd nord-gnome-terminal/src
+./nord.sh
+cd ../..
+rm -rf nord-gnome-terminal
+proflist=$(gsettings get org.gnome.Terminal.ProfilesList list | tr -d \[ | tr -d \] | tr -d \' | tr -d , | tr -d \s)
+for prof in $proflist; do
+    name=$(gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$prof/ visible-name)
+    if [ $name == Nord ]; then
+        gsettings set org.gnome.Terminal.ProfilesList default $prof
+        termprof=$prof
+    fi
+done
+
+######################
+#### FILE MANAGER ####
+######################
+gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+
+# customize
+gsettings set org.gnome.Terminal.Legacy.Settings headerbar false
+gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ use-transparent-background true
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ background-transparency-percent 15
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ audible-bell false
+gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ scrollbar-policy 'never'
+
+#####################################
+#### WORKSPACES AND APPLICATIONS ####
+#####################################
+
+# dynamic workspace
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 6
+gsettings set org.gnome.shell.app-switcher current-workspace-only true
+
+# assign applications to workspace
+gsettings set org.gnome.shell.extensions.auto-move-windows application-list
+
+# favorite applications
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'brave-browser.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Terminal.desktop', 'spotify.desktop', 'slack.desktop', 'zoom.desktop', 'libreoffice-impress.desktop']"
+
+##################
+#### SETTINGS ####
+##################
+# sound
+gsettings set org.gnome.desktop.wm.preferences audible-bell 'false'
+
+# power
+gsettings  set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing'
+gsettings  set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+gsettings  set org.gnome.settings-daemon.plugins.power power-button-action 'interactive'
+
+# night light
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 12.0
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 12.0
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
+
+# mouse and touchpad
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scroll-enabled true
+gsettings set org.gnome.desktop.peripherals.mouse natural-scroll false
+
+# keyboard (french ca)
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'ca')]"
+
+
+############################
+#### KEYBOARD SHORTCUTS ####
+############################
+
+### SYSTEM ###
+
+# disable favorites
+for i in {1..9}; do
+    gsettings set org.gnome.shell.keybindings switch-to-application-$i "[]"
+done
+
+# workspace swithcing/moving
+for i in {1..9}; do
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"
+    gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "['<Super><Shift>$i']"
+done
+
+# window switching
+gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-group "['<Super>Above_Tab', '<Alt>Above_Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-group-backward "['<Shift><Super>Above_Tab', '<Shift><Alt>Above_Tab']"
+
+# system
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>comma']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys logout "['<Shift><Super>e']"
+gsettings set org.gnome.desktop.wm.keybindings panel-run-dialog "['<Super>r']"
+gsettings set org.gnome.shell.keybindings toggle-application-view "['<Super>a']"
+
+# windows
+gsettings set org.gnome.desktop.wm.keybindings close "['<Shift><Super>q']"
+gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>d']"
+gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Shift><Super>f']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-w "['<Shift><Super>h']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-n "['<Shift><Super>k']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-e "['<Shift><Super>l']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-s "['<Shift><Super>j']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-sw "['<Shift><Super>m']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-nw "['<Shift><Super>u']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-se "['<Shift><Super>eacute']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-ne "['<Shift><Super>p']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-right-screen "['<Super>semicolon']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-left-screen "['<Super>colon']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Shift><Super>Return']"
+
+## APPLICATIONS ##
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/']"
+
+# terminal
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Terminal'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'gnome-terminal'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>Return'
+
+# browser
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Browser'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'brave-bin'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>i'
+
+# email
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ name 'Mail'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ command 'thunderbird'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ binding '<Super>m'
+
+# notes
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ name 'Notes'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ command 'joplin-desktop'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ binding '<Super>n'
+
+# pdf
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ name 'PDF'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ command 'okular'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ binding '<Super>p'
+
+# music
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ name 'Music'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ command 'spotify'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ binding '<Super>u'
+
+# chat
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/ name 'Chat'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/ command 'slack'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/ binding '<Super>c'
+
+# file manager
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ name 'Files'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ command 'nautilus'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ binding '<Super>f'
+
+# zotero
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ name 'Zotero'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ command 'zotero'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ binding '<Super>z'
