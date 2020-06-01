@@ -32,6 +32,7 @@ PKGS_PAC=(
     'stellarium'
 
     # UTILS
+    'htop'
     'cups'
     'cups-pdf'
     'openssh'
