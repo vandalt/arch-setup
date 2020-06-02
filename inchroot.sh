@@ -40,6 +40,8 @@ done
 pacman -Syu --noconfirm
 pacman -S vi wget git openssh grub efibootmgr os-prober networkmanager network-manager-applet wireless_tools wpa_supplicant dialog mtools dosfstools base-devel linux-headers intel-ucode --noconfirm
 
+sed -i -e "s/#MAKEFLAGS=.*/MAKEFLAGS=\"-j\$\(nproc\)\"/g" /etc/makepkg.conf
+
 # setup GRUB bootloader
 grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg

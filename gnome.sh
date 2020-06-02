@@ -250,6 +250,7 @@ gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
 gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
 gsettings set org.gnome.desktop.wm.keybindings switch-group "['<Super>Above_Tab', '<Alt>Above_Tab']"
 gsettings set org.gnome.desktop.wm.keybindings switch-group-backward "['<Shift><Super>Above_Tab', '<Shift><Alt>Above_Tab']"
+gsettings set org.gnome.mutter.keybindings switch-monitor "['XF86Display']"
 
 # system
 gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>comma']"

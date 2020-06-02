@@ -8,12 +8,14 @@ PKGS_PAC=(
 
     # APPEARANCE
     'murrine'
-    'qt5-styleplugins'
 
     # DEV
     'gvim'
     'git'
     'jdk-openjdk'
+    'ipython'
+    'python-numpy'
+    'python-matplotlib'
 
     # SOCIAL
     'thunderbird'
@@ -23,6 +25,7 @@ PKGS_PAC=(
     'texmaker'
     'libreoffice-fresh'
     'okular'
+    'gimp'
 
     # VIDEO
     'kdenlive'
@@ -61,6 +64,7 @@ PKGS_AUR=(
 
     # UTILS
     'safeeyes'
+    'qt5-styleplugins'
     'epson-inkjet-printer-201106w'
 
     # AUDIO
