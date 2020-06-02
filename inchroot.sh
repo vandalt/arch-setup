@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+$MYHOST=$1
+
 # swap file
 echo "Creating swap..."
 fallocate -l 4GB /swapfile
