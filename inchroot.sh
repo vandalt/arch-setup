@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-$MYHOST=$1
+MYHOST=$1
 
 # swap file
 echo "Creating swap..."
