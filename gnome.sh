@@ -100,7 +100,7 @@ echo ".dotfiles" >> .gitignore
 git clone --bare git@github.com:vandalt/gnome-dotfiles.git $HOME/.dotfiles
 config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
 config checkout
-config config --local status.show.UntrackedFiles no
+config config --local status.showUntrackedFiles no
 
 ####################
 #### EXTENSIONS ####
