@@ -17,15 +17,16 @@ PKGS_PAC=(
 PKGS_AUR=(
     'gnome-terminal-transparency'
 
-    # EXTENSIONS
-    'gnome-shell-extension-put-window-git'
-    'gnome-shell-extension-dash-to-dock'
-    'gnome-shell-extension-tray-icons'
-    'gnome-shell-extension-hidetopbar-git'
-
     # THEMES
     'nordic-theme-git'
     'paper-icon-theme'
+
+    # EXTENSIONS
+    'gnome-shell-extension-dash-to-dock'
+    'gnome-shell-extension-tray-icons'
+    'gnome-shell-extension-hidetopbar-git'
+    'gnome-shell-extension-put-window-git'
+
 )
 
 PKGS_RM=(
@@ -73,23 +74,17 @@ for PKG in "${PKGS_RM[@]}"; do
     sudo pacman -Rs "$PKG" --noconfirm
 done
 
-# setup AUR
-mkdir AUR
+# AUR
 cd AUR
-git clone https://aur.archlinux.org/auracle-git.git
-cd auracle-git
-makepkg -si --noconfirm
-cd ..
-
 for PKG in "${PKGS_AUR[@]}"; do
     echo "INSTALLING: ${PKG}"
     auracle clone "$PKG"
-    cd "$PKG"
-    makepkg -si --noconfirm
-    cd ..
     if [ "$PKG" == "gnome-shell-extension-put-window-git" ]; then
         sed -i '/convenience.js/d' "$PKG"/PKGBUILD
     fi
+    cd "$PKG"
+    makepkg -si --noconfirm
+    cd ..
 done
 
 # enable required packages
@@ -102,7 +97,6 @@ sudo systemctl enable bluetooth
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 echo ".dotfiles" >> .gitignore
 git clone --bare https://github.com/vandalt/gnome-dotfiles.git $HOME/.dotfiles
-mkdir -p .config-backup && \
 config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
 config checkout
 config config --local status.show.UntrackedFiles no
@@ -113,8 +107,8 @@ config config --local status.show.UntrackedFiles no
 
 # enable
 gnome-extensions enable hidetopbar@mathieu.bidon.ca
-gnome-extensions enable putWindow@clemens.lab21.org
 gnome-extensions enable tray-icons@zhangkaizhao.com
 gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
 gnome-extensions enable dash-to-dock@micxgx.gmail.com
 gnome-extensions enable auto-move-windows@gnome-shell-extensions.gcampax.github.com
+gnome-extensions enable putWindow@clemens.lab21.org
