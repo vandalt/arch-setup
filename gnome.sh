@@ -118,6 +118,7 @@ gnome-extensions enable putWindow@clemens.lab21.org
 gnome-extensions enable tray-icons@zhangkaizhao.com
 gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
 gnome-extensions enable dash-to-dock@micxgx.gmail.com
+gnome-extensions enable auto-move-windows@gnome-shell-extensions.gcampax.github.com
 
 # hide top bar
 gsettings set org.gnome.shell.extensions.hidetopbar enable-intellihide true
@@ -286,6 +287,9 @@ gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-west "['
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-north "['<Super>k']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-east "['<Super>l']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-south "['<Super>j']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-left-screen-enabled 0
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-right-screen-enabled 0
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-cycle-enabled 0
 
 ## APPLICATIONS ##
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/']"

@@ -49,7 +49,7 @@ echo "Entering new install"
 wget https://raw.githubusercontent.com/vandalt/arch-setup/master/inchroot.sh
 chmod +x inchroot.sh
 mv inchroot.sh /mnt
-arch-chroot /mnt ./inchroot.sh $MYHOST
+arch-chroot /mnt ./inchroot.sh $MYHOST $TIMEZONE
 
 # sucess message
 echo "Done with config. You can exit, umount -a, and reboot"

@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 MYHOST=$1
+TIMEZONE=$2
 
 # swap file
 echo "Creating swap..."
@@ -37,7 +38,7 @@ done
 
 # last installs
 pacman -Syu --noconfirm
-pacman -S grub efibootmgr os-prober networkmanager network-manager-applet wireless_tools wpa_supplicant dialog mtools dosfstools base-devel linux-headers intel-ucode --noconfirm
+pacman -S vi wget grub efibootmgr os-prober networkmanager network-manager-applet wireless_tools wpa_supplicant dialog mtools dosfstools base-devel linux-headers intel-ucode --noconfirm
 
 # setup GRUB bootloader
 grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=GRUB
