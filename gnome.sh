@@ -202,6 +202,11 @@ gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['b
 # favorite applications
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'brave-browser.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Nautilus.desktop', 'vim.desktop', 'zotero.desktop', 'spotify.desktop', 'libreoffice-impress.desktop','slack.desktop', 'Zoom.desktop', 'texmaker.desktop']"
 
+# startup applications
+mkdir -p .config/autostart
+cp /usr/share/applications/safeeyes.desktop .config/autostart
+chmod +x .config/autostart/safeeyes.desktop
+
 ##################
 #### SETTINGS ####
 ##################
