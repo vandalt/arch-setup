@@ -4,7 +4,7 @@
 DEVICE="sda"
 TIMEZONE="America/New_York"
 DISKPART="diskpartlayout"
-HOSTNAME="watson"
+MYHOST="watson"
 
 # time and date
 echo "Setting time and date..."
