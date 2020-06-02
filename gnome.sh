@@ -86,6 +86,7 @@ for PKG in "${PKGS_AUR[@]}"; do
     makepkg -si --noconfirm
     cd ..
 done
+cd ~
 
 # enable required packages
 sudo systemctl enable gdm
