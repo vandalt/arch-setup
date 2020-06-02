@@ -22,10 +22,10 @@ echo "KEYMAP=cf" >> /etc/vconsole.conf
 
 # Network
 echo "Setting network..."
-echo "$HOSTNAME" >> /etc/hostname
+echo "$MYHOST" >> /etc/hostname
 echo "127.0.0.1    localhost" >> /etc/hosts
 echo "::1          localhost" >> /etc/hosts
-echo "127.0.1.1    $HOSTNAME.localdomain    $HOSTNAME" >> /etc/hosts
+echo "127.0.1.1    $MYHOST.localdomain    $MYHOST" >> /etc/hosts
 
 # root password
 until passwd
