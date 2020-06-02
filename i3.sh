@@ -2,7 +2,7 @@
 
 shopt -s expand_aliases
 
-MYUSER=vandal
+MYUSER="vandal"
 BRANCH=$HOSTNAME
 
 PKGS_PAC=(
