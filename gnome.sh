@@ -165,7 +165,7 @@ cd ../..
 rm -rf nord-gnome-terminal
 proflist=$(gsettings get org.gnome.Terminal.ProfilesList list | tr -d \[ | tr -d \] | tr -d \' | tr -d , | tr -d \s)
 for prof in $proflist; do
-    name=$(gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$prof/ visible-name | tr -d \')
+    name=$(gsettings get org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$prof/ visible-name | tr -d \')
     if [ $name == Nord ]; then
         gsettings set org.gnome.Terminal.ProfilesList default $prof
         termprof=$prof
