@@ -8,9 +8,9 @@ BRANCH=$HOSTNAME
 PKGS_PAC=(
 
     # DE
+    'i3-gaps'
     'lightdm'
     'lightdm-webkit2-greeter'
-    'i3-gaps'
     'feh'
     'picom'
     'fontawesome'

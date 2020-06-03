@@ -8,9 +8,9 @@ BRANCH=$HOSTNAME
 PKGS_PAC=(
 
     # DE
+    'i3-gaps'
     'lightdm'
     'lightdm-webkit2-greeter'
-    'i3-gaps'
     'feh'
     'picom'
     'fontawesome'
@@ -90,9 +90,6 @@ cd AUR
 for PKG in "${PKGS_AUR[@]}"; do
     echo "INSTALLING: ${PKG}"
     auracle clone "$PKG"
-    if [ "$PKG" == "gnome-shell-extension-put-window-git" ]; then
-        sed -i '/convenience.js/d' "$PKG"/PKGBUILD
-    fi
     cd "$PKG"
     makepkg -si --noconfirm
     cd ..
