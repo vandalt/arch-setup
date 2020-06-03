@@ -16,7 +16,7 @@ PKGS_PAC=(
     'lightdm-webkit2-greeter'
     'feh'
     'picom'
-    'fontawesome'
+    'ttf-font-awesome'
     'rofi'
     'i3blocks'
     'udiskie'
@@ -127,3 +127,6 @@ sudo sed -i '/^ \+MatchIsTouchpad "on"/a \\tOption "Tapping" "true"\n\tOption "T
 
 # bluetooth
 sudo systemctl enable bluetooth
+
+# blue light filter
+systemctl --user enable redshift
