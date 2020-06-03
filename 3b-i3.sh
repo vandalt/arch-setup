@@ -28,6 +28,7 @@ PKGS_PAC=(
     'acpi'
     'playerctl'
     'redshift'
+    'xdg-user-dirs'
 
     # BLUETOOTH
     'bluez'
