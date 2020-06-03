@@ -100,34 +100,34 @@ for PKG in "${PKGS_AUR[@]}"; do
 done
 cd ~
 
-##################
-#### DOTFILES ####
-##################
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-echo ".dotfiles" >> .gitignore
-git clone --bare https://github.com/vandalt/i3-dotfiles.git $HOME/.dotfiles
-config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
-config checkout
-config config --local status.showUntrackedFiles no
-config checkout $BRANCH
+# ##################
+# #### DOTFILES ####
+# ##################
+# alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# echo ".dotfiles" >> .gitignore
+# git clone --bare https://github.com/vandalt/i3-dotfiles.git $HOME/.dotfiles
+# config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
+# config checkout
+# config config --local status.showUntrackedFiles no
+# config checkout $BRANCH
 
 #################
 #### LIGHTDM ####
 #################
 sudo systemctl enable lightdm
-sudo cp .face /var/lib/AccountsService/icons/"$MYUSER"
-if [ -f /var/lib/AccountsService/users/$MYUSER ]; then
-    sudo sed -i -e "s/Icon=.*/Icon=\/var\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
-fi
+#sudo cp .face /var/lib/AccountsService/icons/"$MYUSER"
+#if [ -f /var/lib/AccountsService/users/$MYUSER ]; then
+#    sudo sed -i -e "s/Icon=.*/Icon=\/var\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
+#fi
 
 ##################
 #### HARDWARE ####
 ##################
 # keyboard layout
-sudo localectl set-x11-keymap ca
+#sudo localectl set-x11-keymap ca
 
 # touchpad
-sudo sed -i '/MatchIsTouchpad "on"/a \\tOption "Tapping" "true"\n\tOption "TappingButtonMap" "lrm"\n\tOption "NaturalScrolling" "true' /usr/share/X11/xorg.conf.d/40-libinput.conf
+#sudo sed -i '/MatchIsTouchpad "on"/a \\tOption "Tapping" "true"\n\tOption "TappingButtonMap" "lrm"\n\tOption "NaturalScrolling" "true' /usr/share/X11/xorg.conf.d/40-libinput.conf
 
 # bluetooth
-sudo systemctl enable bluetooth
+#sudo systemctl enable bluetooth
