@@ -112,7 +112,15 @@ config checkout $BRANCH
 #################
 sudo systemctl enable lightdm
 sudo cp .face /var/lib/AccountsService/icons/"$MYUSER"
-sudo sed -i -e "s/Icon=.*/Icon=\/var\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
+if sudo [ -f /var/lib/AccountsService/users/$MYUSER ]; then
+    sudo sed -i -e "s/Icon=.*/Icon=\/var\/lib\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
+else
+    sudo echo "[User]" >> /var/lib/AccountsService/users/$MYUSER
+    sudo echo "Session=i3" >> /var/lib/AccountsService/users/$MYUSER
+    sudo echo "XSession=i3" >> /var/lib/AccountsService/users/$MYUSER
+    sudo echo "Icon=/var/lib/AccountsService/icons/$MYUSER" >> /var/lib/AccountsService/users/$MYUSER
+    sudo echo "SystemAccount=false" >> /var/lib/AccountsService/users/$MYUSER
+fi
 
 ##################
 #### HARDWARE ####
@@ -121,7 +129,7 @@ sudo sed -i -e "s/Icon=.*/Icon=\/var\/AccountsService\/icons\/$MYUSER/g" /var/li
 sudo localectl set-x11-keymap ca
 
 # touchpad
-sudo sed -i '/MatchIsTouchpad "on"/a \\tOption "Tapping" "true"\n\tOption "TappingButtonMap" "lrm"\n\tOption "NaturalScrolling" "true' /usr/share/X11/xorg.conf.d/40-libinput.conf
+sudo sed -i '/^ \+MatchIsTouchpad "on"/a \\tOption "Tapping" "true"\n\tOption "TappingButtonMap" "lrm"\n\tOption "NaturalScrolling" "true' /usr/share/X11/xorg.conf.d/40-libinput.conf
 
 # bluetooth
 sudo systemctl enable bluetooth
