@@ -3,8 +3,8 @@
 # Post-install basic setup
 
 # enable internet
-#systemctl start NetworkManager
-#systemctl enable NetworkManager
+systemctl start NetworkManager
+systemctl enable NetworkManager
 
 # connect wifi
 read -r -p "Connect with nmtui [Y/n] " response
@@ -28,7 +28,10 @@ for i in $(seq 1 $nuser)
 do
     read -r -p "Username: " uname
     useradd -m -G wheel $uname
-    passwd $uname
+    until passwd $uname
+    do
+        echo "Try again"
+    done
 done
 
 # sudo privileges for wheel group
@@ -36,4 +39,4 @@ read -p "Press [Enter] key to enter visudo. You can then safely uncomment the wh
 visudo
 
 # graphical installs
-pacman -S mesa xorg xf86-video-intel
+pacman -S mesa xorg xf86-video-intel --noconfirm
