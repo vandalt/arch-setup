@@ -27,6 +27,7 @@ done
 for i in $(seq 1 $nuser)
 do
     read -r -p "Username: " uname
+    useradd -m -G wheel $uname
     passwd $uname
 done
 
