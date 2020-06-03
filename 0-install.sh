@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 
 # options
+MYHOST=$1
 DEVICE="sda"
 TIMEZONE="America/New_York"
 DISKPART="diskpartlayout"
-MYHOST="watson"
 
 # time and date
 echo "Setting time and date..."
