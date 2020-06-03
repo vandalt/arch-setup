@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 
+# Install i3 and other programs to form a DE
+# RUN AFTER LOGIN: sudo sed -i -e "s/Icon=.*/Icon=\/var\/lib\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
+
 shopt -s expand_aliases
 
 MYUSER="vandal"
@@ -112,15 +115,6 @@ config checkout $BRANCH
 #################
 sudo systemctl enable lightdm
 sudo cp .face /var/lib/AccountsService/icons/"$MYUSER"
-if sudo [ -f /var/lib/AccountsService/users/$MYUSER ]; then
-    sudo sed -i -e "s/Icon=.*/Icon=\/var\/lib\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
-else
-    sudo echo "[User]" >> /var/lib/AccountsService/users/$MYUSER
-    sudo echo "Session=i3" >> /var/lib/AccountsService/users/$MYUSER
-    sudo echo "XSession=i3" >> /var/lib/AccountsService/users/$MYUSER
-    sudo echo "Icon=/var/lib/AccountsService/icons/$MYUSER" >> /var/lib/AccountsService/users/$MYUSER
-    sudo echo "SystemAccount=false" >> /var/lib/AccountsService/users/$MYUSER
-fi
 
 ##################
 #### HARDWARE ####
