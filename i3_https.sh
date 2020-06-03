@@ -86,7 +86,11 @@ for PKG in "${PKGS_PAC[@]}"; do
 done
 
 # AUR
+mkdir AUR
 cd AUR
+git clone https://aur.archlinux.org/auracle-git.git
+cd auracle-git
+makepkg -si --noconfirm
 for PKG in "${PKGS_AUR[@]}"; do
     echo "INSTALLING: ${PKG}"
     auracle clone "$PKG"
