@@ -40,6 +40,11 @@ done
 pacman -Syu --noconfirm
 pacman -S vi wget git openssh grub efibootmgr os-prober networkmanager network-manager-applet wireless_tools wpa_supplicant dialog mtools dosfstools base-devel linux-headers intel-ucode --noconfirm
 
+# Get setup file for later
+cd /root
+wget https://raw.githubusercontent.com/vandalt/arch-setup/master/1-setup.sh
+cd /
+
 sed -i -e "s/#MAKEFLAGS=.*/MAKEFLAGS=\"-j\$\(nproc\)\"/g" /etc/makepkg.conf
 
 # setup GRUB bootloader
