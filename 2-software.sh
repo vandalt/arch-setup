@@ -16,6 +16,9 @@ PKGS_PAC=(
     'ipython'
     'python-numpy'
     'python-matplotlib'
+    'cmake'
+    'nodejs'
+    'go'
 
     # SOCIAL
     'thunderbird'
