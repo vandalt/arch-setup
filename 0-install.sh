@@ -1,6 +1,10 @@
 #!/usr/bin/bash
 
 # options
+if [ $# -eq 0 ]; then
+    echo "ERROR: no hostname specified."
+    exit 1
+fi
 MYHOST=$1
 DEVICE="sda"
 TIMEZONE="America/New_York"
@@ -15,7 +19,7 @@ timedatectl set-timezone $TIMEZONE
 echo "Partitioning disk"
 if [ ! -f $DISKPART ]; then
     echo "ERROR: Disk partition file not found."
-    exit 1
+    exit 2
 fi
 sfdisk /dev/"$DEVICE" < diskpartlayout
 
