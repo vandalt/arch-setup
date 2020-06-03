@@ -90,9 +90,6 @@ cd AUR
 for PKG in "${PKGS_AUR[@]}"; do
     echo "INSTALLING: ${PKG}"
     auracle clone "$PKG"
-    if [ "$PKG" == "gnome-shell-extension-put-window-git" ]; then
-        sed -i '/convenience.js/d' "$PKG"/PKGBUILD
-    fi
     cd "$PKG"
     makepkg -si --noconfirm
     cd ..
@@ -115,7 +112,9 @@ config checkout $BRANCH
 #################
 sudo systemctl enable lightdm
 sudo cp .face /var/lib/AccountsService/icons/"$MYUSER"
-sudo sed -i -e "s/Icon=.*/Icon=\/var\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
+if [ -f /var/lib/AccountsService/users/$MYUSER ]; then
+    sudo sed -i -e "s/Icon=.*/Icon=\/var\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER
+fi
 
 ##################
 #### HARDWARE ####
