@@ -31,6 +31,8 @@ PKGS_AUR=(
 
 PKGS_RM=(
     'epiphany'
+    'gnome-books'
+    'sushi'
     'evince'
     'file-roller'
     'gnome-calculator'
@@ -187,11 +189,11 @@ gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 # dynamic workspaces
 gsettings set org.gnome.shell.overrides dynamic-workspaces false
 gsettings set org.gnome.mutter dynamic-workspaces false
-gsettings set org.gnome.desktop.wm.preferences num-workspaces 6
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 7
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
 
 # assign applications to workspace
-gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['brave-browser.desktop:2', 'thunderbird.desktop:5', 'joplin.desktop:3', 'spotify.desktop:6', 'slack.desktop:5', 'cpod.desktop:6']"
+gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['brave-browser.desktop:2', 'thunderbird.desktop:6', 'joplin.desktop:3', 'spotify.desktop:7', 'slack.desktop:6', 'cpod.desktop:7']"
 
 # favorite applications
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'brave-browser.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Nautilus.desktop', 'vim.desktop', 'zotero.desktop', 'spotify.desktop', 'libreoffice-impress.desktop','slack.desktop', 'Zoom.desktop', 'texmaker.desktop']"
@@ -238,9 +240,19 @@ for i in {1..9}; do
 done
 
 # workspace swithcing/moving
-for i in {1..9}; do
+for i in {1..4}; do
     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"
     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "['<Super><Shift>$i']"
+done
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-5 "['<Super>8']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-5 "['<Super><Shift>8']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-6 "['<Super>9']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-6 "['<Super><Shift>9']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-7 "['<Super>0']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-7 "['<Super><Shift>0']"
+for i in {8..9}; do
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "[]"
+    gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "[]"
 done
 
 # window switching
@@ -257,6 +269,8 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super
 gsettings set org.gnome.settings-daemon.plugins.media-keys logout "['<Shift><Super>e']"
 gsettings set org.gnome.desktop.wm.keybindings panel-run-dialog "['<Super>r']"
 gsettings set org.gnome.shell.keybindings toggle-application-view "['<Super>a']"
+gsettings set org.gnome.shell.keybindings focus-active-notification "[]"
+gsettings set org.gnome.shell.keybindings toggle-message-tray "['<Super>v']"
 
 # windows general
 gsettings set org.gnome.desktop.wm.keybindings close "['<Shift><Super>q']"
