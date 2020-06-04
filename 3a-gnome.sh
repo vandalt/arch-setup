@@ -263,6 +263,7 @@ gsettings set org.gnome.desktop.wm.keybindings close "['<Shift><Super>q']"
 gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>d']"
 gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen "['<Shift><Super>f']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-center-only-toggles 1
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Shift>XF86Keyboard']"
 
 # putwindow snapping
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-w "['<Shift><Super>h']"
@@ -275,13 +276,16 @@ gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-se "[
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-ne "['<Shift><Super>p']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-right-screen "['<Super>semicolon']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-left-screen "['<Super>colon']"
-gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Shift><Super>Return']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Shift><Super>space']"
 
 # putwindow focus
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-west "['<Super>h']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-north "['<Super>k']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-east "['<Super>l']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-south "['<Super>j']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-left-screen "[]"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-right-screen "[]"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-cycle "[]"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-left-screen-enabled 0
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-right-screen-enabled 0
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-cycle-enabled 0
