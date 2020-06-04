@@ -129,13 +129,13 @@ gsettings set org.gnome.shell.extensions.dash-to-dock intellihide true
 gsettings set org.gnome.shell.extensions.dash-to-dock intellihide-mode 'ALL_WINDOWS'
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen false
-gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 56
+gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 50
 gsettings set org.gnome.shell.extensions.dash-to-dock show-favorites true
 gsettings set org.gnome.shell.extensions.dash-to-dock show-running true
 gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
 gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
 gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys false
-gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink false
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
 gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
 gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.20
 gsettings set org.gnome.shell.extensions.dash-to-dock force-straight-corner false
