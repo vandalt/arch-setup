@@ -119,6 +119,7 @@ gnome-extensions enable auto-move-windows@gnome-shell-extensions.gcampax.github.
 # hide top bar
 gsettings set org.gnome.shell.extensions.hidetopbar enable-intellihide true
 gsettings set org.gnome.shell.extensions.hidetopbar enable-active-window true
+gsettings set org.gnome.shell.extensions.hidetopbar mouse-sensitive true
 gsettings set org.gnome.shell.extensions.hidetopbar shortcut-toggles true
 gsettings set org.gnome.shell.extensions.hidetopbar shortcut-keybind "['<Shift><Super>i']"
 gsettings set org.gnome.shell.extensions.hidetopbar pressure-timeout 100
