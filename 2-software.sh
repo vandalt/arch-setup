@@ -20,7 +20,11 @@ PKGS_PAC=(
     'nodejs'
     'go'
 
-    # SOCIAL
+    # BROWSER
+    'firefox'
+    'chromium'
+
+    # EMAIL
     'thunderbird'
 
     # OFFICE
@@ -46,9 +50,6 @@ PKGS_PAC=(
 )
 
 PKGS_AUR=(
-
-    # INTERNET
-    'brave-bin'
 
     # DEV
     'vim-plug-git'

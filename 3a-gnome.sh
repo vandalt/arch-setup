@@ -194,10 +194,10 @@ gsettings set org.gnome.desktop.wm.preferences num-workspaces 7
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
 
 # assign applications to workspace
-gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['brave-browser.desktop:2', 'thunderbird.desktop:6', 'joplin.desktop:3', 'spotify.desktop:7', 'slack.desktop:6', 'cpod.desktop:7']"
+gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['firefox.desktop:2', 'chromium.desktop:2', 'thunderbird.desktop:6', 'joplin.desktop:3', 'spotify.desktop:7', 'slack.desktop:6', 'cpod.desktop:7']"
 
 # favorite applications
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'brave-browser.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Nautilus.desktop', 'vim.desktop', 'zotero.desktop', 'spotify.desktop', 'libreoffice-impress.desktop','slack.desktop', 'Zoom.desktop', 'texmaker.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'firefox.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Nautilus.desktop', 'vim.desktop', 'zotero.desktop', 'spotify.desktop', 'libreoffice-impress.desktop','slack.desktop', 'Zoom.desktop', 'texmaker.desktop']"
 
 ##################
 #### SETTINGS ####
@@ -315,7 +315,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 
 # browser
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Browser'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'brave'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'firefox'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>i'
 
 # email
