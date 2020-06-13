@@ -5,7 +5,7 @@ TIMEZONE=$2
 
 # swap file
 echo "Creating swap..."
-fallocate -l 4GB /swapfile
+dd if=/dev/zero of=/swapfile bs=1M count=4000 status=progress
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
