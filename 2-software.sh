@@ -55,7 +55,6 @@ PKGS_AUR=(
     'vim-plug-git'
     'nvm'
     'gconf'
-    'mathematica'
 
     # OFFICE
     'zotero'
