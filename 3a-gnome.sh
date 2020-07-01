@@ -19,6 +19,7 @@ PKGS_AUR=(
 
     # THEMES
     'nordic-theme-git'
+    'ant-gtk-theme'
     'paper-icon-theme'
 
     # EXTENSIONS
