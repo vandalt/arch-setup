@@ -50,7 +50,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # chroot to new install
 echo "Entering new install"
-wget https://raw.githubusercontent.com/vandalt/arch-setup/master/inchroot.sh
+wget https://raw.githubusercontent.com/vandalt/arch-setup/main/inchroot.sh
 chmod +x inchroot.sh
 mv inchroot.sh /mnt
 arch-chroot /mnt ./inchroot.sh $MYHOST $TIMEZONE
