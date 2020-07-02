@@ -31,14 +31,14 @@ d2=$(fdisk -l | grep -o '^/dev/.*2\b')
 
 # filesystem
 echo "Creating file system"
-mkfs.fat -F32 /dev/"$d1"
-mkfs.ext4 /dev/"$d2"
+mkfs.fat -F32 "$d1"
+mkfs.ext4 "$d2"
 
 # mount
 echo "Mounting partitions..."
-mount /dev/"$d2" /mnt
+mount "$d2" /mnt
 mkdir -p /mnt/boot/EFI
-mount /dev/"$d1" /mnt/boot/EFI
+mount "$d1" /mnt/boot/EFI
 
 # sort mirrors
 echo "Sorting mirrors..."
