@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # options
-if [ $# -neq 4 ]; then
+if [ $# -ne 4 ]; then
     echo "ERROR: no hostname specified."
     echo "USAGE: ./0-install.sh HOST DEVICE PARTITION SWAP"
     echo "SWAP is in M"
