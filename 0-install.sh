@@ -1,15 +1,18 @@
 #!/usr/bin/bash
 
 # options
-if [ $# -eq 0 ]; then
+if [ $# -neq 4 ]; then
     echo "ERROR: no hostname specified."
+    echo "USAGE: ./0-install.sh HOST DEVICE PARTITION SWAP"
+    echo "SWAP is in M"
+    echo "EXAMPLE: ./0-install.sh laptop sda diskfile 4000"
     exit 1
 fi
 MYHOST=$1
-DEVICE="sda"
+DEVICE=$2
 TIMEZONE="America/New_York"
-DISKPART="disk256"
-MYSWAP="4000"
+DISKPART=$3
+MYSWAP=$4
 
 # time and date
 echo "Setting time and date..."
