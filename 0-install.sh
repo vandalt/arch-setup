@@ -26,8 +26,8 @@ if [ ! -f $DISKPART ]; then
     exit 2
 fi
 sfdisk /dev/"$DEVICE" < "$DISKPART"
-d1=$(fdisk -l | grep -o '^/dev/.*1\b')
-d2=$(fdisk -l | grep -o '^/dev/.*2\b')
+d1=$(fdisk -l | grep -o -m 1 '^/dev/.*1\b')
+d2=$(fdisk -l | grep -o -m 1 '^/dev/.*2\b')
 
 # filesystem
 echo "Creating file system"
