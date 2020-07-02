@@ -8,7 +8,8 @@ fi
 MYHOST=$1
 DEVICE="sda"
 TIMEZONE="America/New_York"
-DISKPART="diskpartlayout"
+DISKPART="disk256"
+MYSWAP="4000"
 
 # time and date
 echo "Setting time and date..."
@@ -22,17 +23,19 @@ if [ ! -f $DISKPART ]; then
     exit 2
 fi
 sfdisk /dev/"$DEVICE" < diskpartlayout
+d1=$(fdisk -l | grep -o '^/dev/.*1\b')
+d2=$(fdisk -l | grep -o '^/dev/.*2\b')
 
 # filesystem
 echo "Creating file system"
-mkfs.fat -F32 /dev/"$DEVICE"1
-mkfs.ext4 /dev/"$DEVICE"2
+mkfs.fat -F32 /dev/"$d1"
+mkfs.ext4 /dev/"$d2"
 
 # mount
 echo "Mounting partitions..."
-mount /dev/"$DEVICE"2 /mnt
+mount /dev/"$d2" /mnt
 mkdir -p /mnt/boot/EFI
-mount /dev/"$DEVICE"1 /mnt/boot/EFI
+mount /dev/"$d1" /mnt/boot/EFI
 
 # sort mirrors
 echo "Sorting mirrors..."
@@ -53,7 +56,7 @@ echo "Entering new install"
 wget https://raw.githubusercontent.com/vandalt/arch-setup/main/inchroot.sh
 chmod +x inchroot.sh
 mv inchroot.sh /mnt
-arch-chroot /mnt ./inchroot.sh $MYHOST $TIMEZONE
+arch-chroot /mnt ./inchroot.sh $MYHOST $TIMEZONE $MYSWAP
 
 # sucess message
 echo "Done with config. You can exit, umount -a, and reboot"

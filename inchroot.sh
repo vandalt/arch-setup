@@ -2,10 +2,11 @@
 
 MYHOST=$1
 TIMEZONE=$2
+MYSWAP=$3
 
 # swap file
 echo "Creating swap..."
-dd if=/dev/zero of=/swapfile bs=1M count=4000 status=progress
+dd if=/dev/zero of=/swapfile bs=1M count="$MYSWAP" status=progress
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile

@@ -1,0 +1,9 @@
+label: gpt
+device: /dev/nvme0n1
+unit: sectors
+first-lba: 34
+last-lba: 2000409230
+sector-size: 512
+
+/dev/nvme0n1p1 : start=        2048, size=      532480, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
+/dev/nvme0n1p2 : start=      534528, size=  1999874703, type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709

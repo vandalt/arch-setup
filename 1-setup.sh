@@ -39,4 +39,4 @@ read -p "Press [Enter] key to enter visudo. You can then safely uncomment the wh
 visudo
 
 # graphical installs
-pacman -S mesa xorg xf86-video-intel --noconfirm
+pacman -S mesa xorg --noconfirm
