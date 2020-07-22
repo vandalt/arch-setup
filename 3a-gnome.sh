@@ -20,7 +20,6 @@ PKGS_AUR=(
     'gnome-terminal-transparency'
 
     # THEMES
-    'nordic-theme-git'
     'ant-gtk-theme'
     'paper-icon-theme'
 
@@ -36,7 +35,6 @@ PKGS_RM=(
     'epiphany'
     'gnome-books'
     'sushi'
-    'evince'
     'file-roller'
     'gnome-calculator'
     'gnome-contacts'
@@ -97,17 +95,6 @@ cd ~
 sudo systemctl enable gdm
 sudo systemctl enable bluetooth
 
-##################
-#### DOTFILES ####
-##################
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-echo ".dotfiles" >> .gitignore
-git clone --bare git@github.com:vandalt/gnome-dotfiles.git $HOME/.dotfiles
-config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
-config checkout
-config config --local status.showUntrackedFiles no
-config checkout arch
-
 ####################
 #### EXTENSIONS ####
 ####################
@@ -158,23 +145,20 @@ gsettings set org.gnome.desktop.interface cursor-theme 'Paper'
 ##################
 #### TERMINAL ####
 ##################
-
-# get nord and set as default
-git clone https://github.com/arcticicestudio/nord-gnome-terminal.git
-cd nord-gnome-terminal/src
-./nord.sh
-cd ../..
-rm -rf nord-gnome-terminal
+git clone https://github.com/dracula/gnome-terminal
+cd gnome-terminal
+./install.sh
+cd ..
+rm -rf gnome-terminal
 proflist=$(gsettings get org.gnome.Terminal.ProfilesList list | tr -d \[ | tr -d \] | tr -d \' | tr -d , | tr -d \s)
 for prof in $proflist; do
     name=$(gsettings get org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$prof/ visible-name | tr -d \')
-    if [ $name == Nord ]; then
+    if [ $name == Default ]; then
         gsettings set org.gnome.Terminal.ProfilesList default $prof
+	gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$prof/ visible-name Dracula
         termprof=$prof
     fi
 done
-
-# customize
 gsettings set org.gnome.Terminal.Legacy.Settings headerbar false
 gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ use-transparent-background true
@@ -182,10 +166,6 @@ gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profi
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ audible-bell false
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$termprof/ scrollbar-policy 'never'
 
-######################
-#### FILE MANAGER ####
-######################
-gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 
 #####################################
 #### WORKSPACES AND APPLICATIONS ####
@@ -201,7 +181,7 @@ gsettings set org.gnome.shell.app-switcher current-workspace-only true
 gsettings set org.gnome.shell.extensions.auto-move-windows application-list "['firefox.desktop:2', 'chromium.desktop:2', 'thunderbird.desktop:6', 'joplin.desktop:3', 'spotify.desktop:7', 'slack.desktop:6', 'cpod.desktop:7']"
 
 # favorite applications
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'firefox.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Nautilus.desktop', 'vim.desktop', 'zotero.desktop', 'spotify.desktop', 'libreoffice-impress.desktop','slack.desktop', 'Zoom.desktop', 'texmaker.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'firefox.desktop', 'thunderbird.desktop', 'joplin.desktop', 'org.gnome.Nautilus.desktop', 'nvim.desktop', 'zotero.desktop', 'spotify.desktop', 'libreoffice-impress.desktop','slack.desktop', 'Zoom.desktop']"
 
 ##################
 #### SETTINGS ####
@@ -226,9 +206,6 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
 gsettings set org.gnome.desktop.peripherals.mouse natural-scroll false
-
-# keyboard (french ca)
-gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'ca')]"
 
 # window top bar tweaks
 gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:appmenu'
@@ -334,7 +311,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 
 # pdf
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ name 'PDF'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ command 'env QT_QPA_PLATFORMTHEME=gtk2 okular'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ command 'evince'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ binding '<Super>p'
 
 # music
@@ -356,3 +333,8 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ name 'Zotero'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ command 'zotero'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ binding '<Super>z'
+
+# make zsh the default
+chsh -s /usr/bin/zsh
+echo "Do not forget to activate toolkit.legacyUserProfileCustomizations.stylesheets in Firefox"
+echo "Reboot for all changes to take effect"

@@ -22,7 +22,6 @@ echo "Setting localization..."
 sed -i '/en_CA.UTF/s/^#//g' /etc/locale.gen
 locale-gen
 echo "LANG=en_CA.UTF-8" >> /etc/locale.conf
-echo "KEYMAP=cf" >> /etc/vconsole.conf
 
 # Network
 echo "Setting network..."

@@ -47,7 +47,7 @@ PKGS_PAC=(
     'thunar'
     'ristretto'
     'mousepad'
-    
+
     # THEMES
     'arc-gtk-theme'
     'papirus-icon-theme'
@@ -57,7 +57,7 @@ PKGS_AUR=(
 
     # THEMES
     'lightdm-webkit-theme-aether'
-    'nordic-theme-git'
+    'ant-gtk-theme'
     'paper-icon-theme'
 
     # UTILS
@@ -100,17 +100,6 @@ for PKG in "${PKGS_AUR[@]}"; do
 done
 cd ~
 
-##################
-#### DOTFILES ####
-##################
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-echo ".dotfiles" >> .gitignore
-git clone --bare git@github.com:vandalt/dotfiles.git $HOME/.dotfiles
-config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
-config checkout
-config config --local status.showUntrackedFiles no
-config checkout arch
-
 #################
 #### LIGHTDM ####
 #################
@@ -120,9 +109,6 @@ sudo cp .face /var/lib/AccountsService/icons/"$MYUSER"
 ##################
 #### HARDWARE ####
 ##################
-# keyboard layout
-sudo localectl set-x11-keymap ca
-
 # touchpad
 sudo sed -i '/^ \+MatchIsTouchpad "on"/a \\tOption "Tapping" "true"\n\tOption "TappingButtonMap" "lrm"\n\tOption "NaturalScrolling" "true' /usr/share/X11/xorg.conf.d/40-libinput.conf
 
@@ -131,3 +117,10 @@ sudo systemctl enable bluetooth
 
 # blue light filter
 systemctl --user enable redshift
+echo "On next login, run this:"
+echo "sudo sed -i -e "s/Icon=.*/Icon=\/var\/lib\/AccountsService\/icons\/$MYUSER/g" /var/lib/AccountsService/users/$MYUSER"
+
+# make zsh the default
+chsh -s /usr/bin/zsh
+echo "Do not forget to activate toolkit.legacyUserProfileCustomizations.stylesheets in Firefox"
+echo "Reboot for all changes to take effect"

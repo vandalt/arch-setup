@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+shopt -s expand_aliases
+
 PKGS_PAC=(
 
     # FONTS
@@ -10,7 +12,8 @@ PKGS_PAC=(
     'murrine'
 
     # DEV
-    'gvim'
+    'neovim'
+    'python-pynvim'
     'git'
     'jdk-openjdk'
     'ipython'
@@ -29,7 +32,6 @@ PKGS_PAC=(
 
     # OFFICE
     'texlive-most'
-    'texmaker'
     'libreoffice-fresh'
     'okular'
     'gimp'
@@ -42,6 +44,8 @@ PKGS_PAC=(
     'stellarium'
 
     # UTILS
+    'zsh'
+    'zsh-completions'
     'htop'
     'screen'
     'cups'
@@ -52,9 +56,7 @@ PKGS_PAC=(
 PKGS_AUR=(
 
     # DEV
-    'vim-plug-git'
-    'nvm'
-    'gconf'
+    'vim-dein'
 
     # OFFICE
     'zotero'
@@ -72,7 +74,6 @@ PKGS_AUR=(
 
     # AUDIO
     'spotify'
-    'cpod-git'
 )
 
 bypass() {
@@ -115,3 +116,14 @@ for PKG in "${PKGS_AUR[@]}"; do
     makepkg -si --noconfirm
     cd ..
 done
+
+##################
+#### DOTFILES ####
+##################
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+echo ".dotfiles" >> .gitignore
+git clone --bare git@github.com:vandalt/dotfiles.git $HOME/.dotfiles
+config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
+config checkout
+config config --local status.showUntrackedFiles no
+config checkout arch
