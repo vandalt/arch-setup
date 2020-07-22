@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-# Set themes
-
 shopt -s expand_aliases
 
 PKGS_PAC=(
@@ -32,11 +30,11 @@ PKGS_AUR=(
 )
 
 PKGS_RM=(
+    'evince'
     'epiphany'
     'gnome-books'
     'sushi'
     'file-roller'
-    'gnome-calculator'
     'gnome-contacts'
     'gnome-maps'
     'gnome-documents'
@@ -152,6 +150,20 @@ gsettings set org.gnome.shell.extensions.user-theme name 'Ant-Dracula-slim'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Ant-Dracula-slim'
 gsettings set org.gnome.desktop.interface cursor-theme 'Paper'
+
+# Change papirus folder color
+wget -qO- https://git.io/papirus-folders-install | sh
+papirus-folders -C violet --theme Papirus-Dark
+wget -qO- https://git.io/papirus-folders-install | env uninstall=true sh
+
+###############
+### FIREFOX ###
+###############
+for profile in ~/.mozilla/firefox/*.default-release
+do
+	mkdir $profile/chrome
+    cp ~/.firefox_userContent.css $profile/chrome/userContent.css
+done
 
 ##################
 #### TERMINAL ####
