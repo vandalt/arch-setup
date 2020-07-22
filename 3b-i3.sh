@@ -100,6 +100,17 @@ for PKG in "${PKGS_AUR[@]}"; do
 done
 cd ~
 
+##################
+#### DOTFILES ####
+##################
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+echo ".dotfiles" >> .gitignore
+git clone --bare git@github.com:vandalt/dotfiles.git $HOME/.dotfiles
+config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
+config checkout
+config config --local status.showUntrackedFiles no
+config checkout arch
+
 #################
 #### LIGHTDM ####
 #################
