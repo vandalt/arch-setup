@@ -148,9 +148,9 @@ gsettings set org.gnome.shell.extensions.dash-to-dock force-straight-corner fals
 ###############
 #### THEME ####
 ###############
-gsettings set org.gnome.shell.extensions.user-theme name 'Nordic'
+gsettings set org.gnome.shell.extensions.user-theme name 'Ant-Dracula-slim'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
-gsettings set org.gnome.desktop.interface gtk-theme 'Nordic'
+gsettings set org.gnome.desktop.interface gtk-theme 'Ant-Dracula-slim'
 gsettings set org.gnome.desktop.interface cursor-theme 'Paper'
 
 ##################
