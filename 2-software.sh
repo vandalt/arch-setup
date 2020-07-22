@@ -13,6 +13,7 @@ PKGS_PAC=(
 
     # DEV
     'neovim'
+    'xclip'
     'python-pynvim'
     'git'
     'jdk-openjdk'
