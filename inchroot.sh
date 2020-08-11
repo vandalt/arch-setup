@@ -42,7 +42,7 @@ pacman -S vi wget git openssh grub efibootmgr os-prober networkmanager network-m
 
 # Get setup file for later
 cd /root
-wget https://raw.githubusercontent.com/vandalt/arch-setup/main/1-setup.sh
+wget https://raw.githubusercontent.com/vandalt/arch-setup/main/1_setup.sh
 cd /
 
 sed -i -e "s/#MAKEFLAGS=.*/MAKEFLAGS=\"-j\$\(nproc\)\"/g" /etc/makepkg.conf

@@ -26,7 +26,6 @@ PKGS_PAC=(
 
     # BROWSER
     'firefox'
-    'chromium'
 
     # EMAIL
     'thunderbird'
@@ -39,7 +38,7 @@ PKGS_PAC=(
 
     # VIDEO
     'kdenlive'
-    'vlc'
+    'mpv'
 
     # ASTRO
     'stellarium'
@@ -52,12 +51,16 @@ PKGS_PAC=(
     'cups'
     'cups-pdf'
     'openssh'
+    'iio-sensor-proxy'
 )
 
 PKGS_AUR=(
 
     # DEV
     'vim-dein'
+
+    # Browser
+    'brave-bin'
 
     # OFFICE
     'zotero'
@@ -74,6 +77,7 @@ PKGS_AUR=(
     'epson-inkjet-printer-201106w'
 
     # AUDIO
+    'pulseaudio-git'
     'spotify'
 )
 
