@@ -119,6 +119,13 @@ config checkout
 config config --local status.showUntrackedFiles no
 config checkout arch
 
+alias pconfig='/usr/bin/git --git-dir=$HOME/.private_dotfiles/ --work-tree=$HOME'
+echo ".dotfiles" >> .gitignore
+git clone --bare git@github.com:vandalt/private_dotfiles.git $HOME/.private_dotfiles
+pconfig checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
+pconfig checkout
+pconfig config --local status.showUntrackedFiles no
+
 #################
 #### LIGHTDM ####
 #################
