@@ -26,9 +26,14 @@ PKGS_PAC=(
 
     # BROWSER
     'firefox'
+    'chromium'
+    'qutebrowser'
 
     # EMAIL
     'thunderbird'
+    'neomutt'
+    'isync'
+    'msmtp'
 
     # OFFICE
     'texlive-most'
@@ -58,9 +63,6 @@ PKGS_AUR=(
 
     # DEV
     'vim-dein'
-
-    # Browser
-    'brave-bin'
 
     # OFFICE
     'zotero'
