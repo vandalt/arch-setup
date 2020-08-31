@@ -57,6 +57,7 @@ PKGS_PAC=(
     'cups-pdf'
     'openssh'
     'iio-sensor-proxy'
+    'pdftk'
 )
 
 PKGS_AUR=(
