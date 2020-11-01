@@ -293,9 +293,9 @@ gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-sw "[
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-nw "['<Shift><Super>u']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-se "['<Shift><Super>slash']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-ne "['<Shift><Super>p']"
-gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-right-screen "['<Super>semicolon']"
-gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-left-screen "['<Super>bracketright']"
-gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Super>bracketleft']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-right-screen "['<Super>bracketright']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-left-screen "['<Super>bracketleft']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Shift><Super>space']"
 
 # putwindow focus
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-west "['<Super>h']"
