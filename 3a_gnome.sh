@@ -104,6 +104,13 @@ config checkout
 config config --local status.showUntrackedFiles no
 config checkout arch
 
+alias pconfig='/usr/bin/git --git-dir=$HOME/.private_dotfiles/ --work-tree=$HOME'
+echo ".private_dotfiles" >> .gitignore
+git clone --bare git@gitlab.com:vandalt/private_dotfiles.git $HOME/.private_dotfiles
+pconfig checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
+pconfig checkout
+pconfig config --local status.showUntrackedFiles no
+
 ####################
 #### EXTENSIONS ####
 ####################
@@ -346,6 +353,13 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ name 'Files'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ command 'nautilus'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ binding '<Super>f'
+
+# Setup emails
+mkdir -p $HOME/.mail/{personal,udem}
+mbsync -Va
+sudo systemctl daemon-reload
+systemctl --user enable mbsync.timer
+systemctl --user start mbsync.timer
 
 # make zsh the default
 chsh -s /usr/bin/zsh

@@ -120,14 +120,14 @@ config checkout arch
 
 alias pconfig='/usr/bin/git --git-dir=$HOME/.private_dotfiles/ --work-tree=$HOME'
 echo ".private_dotfiles" >> .gitignore
-git clone --bare git@github.com:vandalt/private_dotfiles.git $HOME/.private_dotfiles
+git clone --bare git@gitlab.com:vandalt/private_dotfiles.git $HOME/.private_dotfiles
 pconfig checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
 pconfig checkout
 pconfig config --local status.showUntrackedFiles no
 
-#################
-#### LIGHTDM ####
-#################
+#########################
+#### DISPLAY MANAGER ####
+#########################
 sudo systemctl enable gdm
 
 ##################
@@ -135,6 +135,13 @@ sudo systemctl enable gdm
 ##################
 # bluetooth
 sudo systemctl enable bluetooth
+
+# Setup emails
+mkdir -p $HOME/.mail/{personal,udem}
+mbsync -Va
+sudo systemctl daemon-reload
+systemctl --user enable mbsync.timer
+systemctl --user start mbsync.timer
 
 # make zsh the default
 chsh -s /usr/bin/zsh
