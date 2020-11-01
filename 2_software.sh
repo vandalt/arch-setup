@@ -20,6 +20,7 @@ PKGS_PAC=(
     'ipython'
     'python-numpy'
     'python-matplotlib'
+    'python-pandas'
     'cmake'
     'nodejs'
     'go'
@@ -30,7 +31,6 @@ PKGS_PAC=(
     'qutebrowser'
 
     # EMAIL
-    'thunderbird'
     'neomutt'
     'isync'
     'msmtp'
@@ -75,13 +75,11 @@ PKGS_AUR=(
     'slack-desktop'
 
     # UTILS
-    'safeeyes'
     'qt5-styleplugins'
     'epson-inkjet-printer-201106w'
 
     # AUDIO
     'pulseaudio-git'
-    'spotify'
 )
 
 bypass() {
@@ -99,9 +97,6 @@ bypass
 # install miniconda python
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3.sh
 bash ~/miniconda3.sh -b -p $HOME/miniconda3
-
-# key for spotify
-gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4773BD5E130D1D45
 
 # install with pacman
 for PKG in "${PKGS_PAC[@]}"; do

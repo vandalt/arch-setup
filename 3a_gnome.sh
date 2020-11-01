@@ -291,11 +291,11 @@ gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-e "['<S
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-side-s "['<Shift><Super>j']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-sw "['<Shift><Super>m']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-nw "['<Shift><Super>u']"
-gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-se "['<Shift><Super>eacute']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-se "['<Shift><Super>slash']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-corner-ne "['<Shift><Super>p']"
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-right-screen "['<Super>semicolon']"
-gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-left-screen "['<Super>colon']"
-gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Shift><Super>space']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-left-screen "['<Super>bracketright']"
+gsettings set org.gnome.shell.extensions.org-lab21-putwindow put-to-center "['<Super>bracketleft']"
 
 # putwindow focus
 gsettings set org.gnome.shell.extensions.org-lab21-putwindow move-focus-west "['<Super>h']"
@@ -324,18 +324,13 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 
 # email
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ name 'Mail'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ command 'thunderbird'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ command 'gnome-terminal -- neomutt'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ binding '<Super>m'
 
 # notes
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ name 'Notes'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ command 'joplin-desktop'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ command 'gnome-terminal -- joplin'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/ binding '<Super>n'
-
-# pdf
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ name 'PDF'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ command 'evince'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/ binding '<Super>p'
 
 # music
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/ name 'Music'
@@ -351,11 +346,6 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ name 'Files'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ command 'nautilus'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ binding '<Super>f'
-
-# zotero
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ name 'Zotero'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ command 'zotero'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ binding '<Super>z'
 
 # make zsh the default
 chsh -s /usr/bin/zsh
