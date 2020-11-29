@@ -30,6 +30,7 @@ PKGS_PAC=(
     'gnome-shell'
     'gnome-control-center'
     'qt5-wayland'
+    'gammastep'
 
     # AUDIO
     'pavucontrol'
@@ -56,14 +57,13 @@ PKGS_AUR=(
     # 'sway-git'
     'xorg-server-hidpi-git'
     'wlroots-hidpi-git'
-    'sway-hidpi-git'
     'swaybg-git'
+    'sway-hidpi-git'
     'swaylock-effects-git'
     'rot8-git'
     'detect-tablet-mode-git'
-    'yoga-usage-mode'
+    'yoga-usage-mode-dkms-git'
     'virtboard'
-    'gammastep'
     'libinput-gestures'
 
     # THEMES
@@ -125,15 +125,10 @@ pconfig checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} rm -rf {}
 pconfig checkout
 pconfig config --local status.showUntrackedFiles no
 
-#########################
-#### DISPLAY MANAGER ####
-#########################
+##################
+#### SERVICES ####
+##################
 sudo systemctl enable gdm
-
-##################
-#### HARDWARE ####
-##################
-# bluetooth
 sudo systemctl enable bluetooth
 
 # Setup emails
