@@ -44,7 +44,7 @@ mount "$d1" /mnt/boot/EFI
 echo "Sorting mirrors..."
 pacman -Sy pacman-contrib --noconfirm
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.back
-curl -s "https://www.archlinux.org/mirrorlist/?country=CA&country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
+curl -s "https://archlinux.org/mirrorlist/?country=CA&country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
 
 # main packages with pacstrap
 echo "Pacstrap..."
