@@ -3,6 +3,7 @@
 MYHOST=$1
 TIMEZONE=$2
 MYSWAP=$3
+WINPART=$4
 
 # swap file
 echo "Creating swap..."
@@ -48,7 +49,10 @@ cd /
 sed -i -e "s/#MAKEFLAGS=.*/MAKEFLAGS=\"-j\$\(nproc\)\"/g" /etc/makepkg.conf
 
 # setup GRUB bootloader
+if [ ! -z "$WINPART" ]
+then
+	mkdir /mnt/windows10
+	mount $WINPART /mnt/windows10
+fi
 grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg
-sed -i -E '/GRUB_TIMEOUT=/s/[[:digit:]]+/0/g' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg

@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
 # options
-if [ $# -ne 4 ]; then
+if [ $# -ne 4 ] && [ $# -ne 5 ]; then
     echo "ERROR: no hostname specified."
-    echo "USAGE: ./0-install.sh HOST DEVICE PARTITION SWAP"
+    echo "USAGE: ./0-install.sh HOST DEVICE PARTITION SWAP [WINPART]"
     echo "SWAP is in M"
-    echo "EXAMPLE: ./0-install.sh laptop sda diskfile 4000"
+    echo "EXAMPLE: ./0-install.sh laptop sda diskfile 4000 [dev/windowspartition]"
     exit 1
 fi
 MYHOST=$1
@@ -13,6 +13,7 @@ DEVICE=$2
 TIMEZONE="America/New_York"
 DISKPART=$3
 MYSWAP=$4
+WINPART=$5
 
 # time and date
 echo "Setting time and date..."
@@ -59,7 +60,7 @@ echo "Entering new install"
 wget https://raw.githubusercontent.com/vandalt/arch-setup/main/inchroot.sh
 chmod +x inchroot.sh
 mv inchroot.sh /mnt
-arch-chroot /mnt ./inchroot.sh $MYHOST $TIMEZONE $MYSWAP
+arch-chroot /mnt ./inchroot.sh $MYHOST $TIMEZONE $MYSWAP $WINPART
 
 # sucess message
 echo "Done with config. You can exit, umount -a, and reboot"
